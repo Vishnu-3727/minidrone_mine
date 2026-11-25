@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drone B Flight Guide</title>
+<style>
+  :root { --bg:#fbfaf7; --fg:#1d1d1b; --muted:#5d5b55; --line:#dedad1; --card:#ffffff; --accent:#0b5cad; --warn-bg:#fff4e0; --warn:#8a4b00; --bad-bg:#fde8e8; --bad:#a11a1a; --ok-bg:#e8f5ea; --ok:#1d6b2e; --code:#f2efe8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161614; --fg:#ecebe6; --muted:#a9a69c; --line:#34332e; --card:#1e1e1b; --accent:#6aaef5; --warn-bg:#3a2a10; --warn:#f3c27a; --bad-bg:#3d1717; --bad:#f39a9a; --ok-bg:#16301c; --ok:#8fd69f; --code:#262622; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.55 system-ui, "Segoe UI", sans-serif; }
+  main { max-width:860px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-size:28px; margin:0 0 4px; }
+  h2 { font-size:20px; margin:36px 0 10px; padding-top:12px; border-top:1px solid var(--line); }
+  h3 { font-size:16px; margin:20px 0 6px; }
+  .sub { color:var(--muted); margin:0 0 20px; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 16px; background:var(--card); }
+  th, td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+  th { background:var(--code); font-weight:600; }
+  code, pre { font-family: Consolas, "Cascadia Mono", monospace; font-size:14px; }
+  code { background:var(--code); padding:1px 5px; border-radius:4px; }
+  pre { background:var(--code); padding:10px 12px; border-radius:6px; overflow-x:auto; margin:6px 0 12px; }
+  .box { border-radius:8px; padding:10px 14px; margin:12px 0; }
+  .warn { background:var(--warn-bg); color:var(--warn); }
+  .bad { background:var(--bad-bg); color:var(--bad); }
+  .ok { background:var(--ok-bg); color:var(--ok); }
+  .box b { color:inherit; }
+  ol li, ul li { margin:4px 0; }
+  nav a { color:var(--accent); margin-right:14px; white-space:nowrap; }
+</style>
+</head>
+<body>
+<main>
+<h1>Drone B Flight Guide</h1>
+<p class="sub">Team ENTITY · Minidrone India 2026 finals · prepared 25 Nov 2026 · works offline</p>
+<nav><a href="#ids">IDs</a><a href="#before">Before you go</a><a href="#net">Network</a><a href="#matlab">MATLAB</a><a href="#deploy">Deploy</a><a href="#fly">Fly</a><a href="#hotspot">Pi → hotspot</a><a href="#trouble">Trouble</a></nav>
+
+<h2 id="ids">1. Drone B details</h2>
+<table>
+<tr><th>Item</th><th>Value</th><th>Used for</th></tr>
+<tr><td>Raspberry Pi IP</td><td><code>192.168.0.204</code></td><td>Deploying code, SSH</td></tr>
+<tr><td>Pi login</td><td>user <code>rpi</code>, host <code>rpib</code>, password <code>rpib</code></td><td><code>ssh rpi@192.168.0.204</code></td></tr>
+<tr><td>MAV_SYS_ID</td><td><code>1</code></td><td>PX4 parameter on the Pixhawk (check in QGroundControl)</td></tr>
+<tr><td>Radio NETID</td><td><code>21</code></td><td>Telemetry radio pair: ground radio must also be 21</td></tr>
+<tr><td>TP-Link Wi-Fi password</td><td><code>16142992</code></td><td>Laptop joins the drone network</td></tr>
+<tr><td>Companion computer</td><td>Raspberry Pi Zero (32-bit OS)</td><td>Runs the camera + our guidance</td></tr>
+<tr><td>Flight controller</td><td>PX4 Pixhawk 6C</td><td>Flashed through the Pi over USB</td></tr>
+</table>
+
+<h3>What is already configured in MATLAB (done 25 Nov)</h3>
+<ul>
+<li>Project: <code>C:\Users\kkjjk\MATLAB\Projects\examples\PX4MultiCopterPerceptionAndControl</code> (MathWorks Nov patch).</li>
+<li><code>perception/PerceptionAndGuidance.slx</code> = <b>our x68 guidance</b> + MathWorks' camera fix (vertical flip on, rotate blocks removed).</li>
+<li>Hardware board = Raspberry Pi, address <code>192.168.0.204</code>, user <code>rpi</code>, build folder <code>/home/rpi</code>.</li>
+<li><b>Simulation = false</b> is forced in <code>scripts/InitVars.m</code> (runs every time the project / model opens).</li>
+<li>Raspberry Pi Blockset + PX4 patches installed and verified.</li>
+<li>Helper: <code>set_drone_ip('x.x.x.x')</code> re-points everything to a new Pi IP.</li>
+<li>Backups: MathWorks' patched model → <code>minidrone-2026\minidrone_2026_tools\PerceptionAndGuidance.mw_patch_nov.slx</code>.</li>
+</ul>
+
+<h2 id="before">2. Before you leave internet — MUST DO</h2>
+<div class="box bad"><b>A. MATLAB uses ONLINE licensing.</b> It needs internet to start. On a TP-Link with no internet, MATLAB may refuse to open. Fix: give the laptop internet <i>and</i> the TP-Link at the same time (section 3, option 1: phone USB tethering). Also: start MATLAB while online and do not close it.</div>
+<div class="box bad"><b>B. PX4 firmware toolchain is NOT set up yet.</b> Without it, Step 1 (flash the Pixhawk) fails with <code>PX4BaseDirNotFound</code>. The setup downloads PX4 from GitHub, so do it with internet:
+<ol>
+<li>Restart PC once if not done since WSL install.</li>
+<li>MATLAB → Home → Add-Ons → Manage Add-Ons → <i>UAV Toolbox Support Package for PX4 Autopilots</i> → ⚙ → <b>Setup</b>.</li>
+<li>Choose WSL / <code>Ubuntu-22.04</code>, board <b>Pixhawk 6C</b>. Run the commands the screen gives you in the Ubuntu window (exactly as shown, they pin the right PX4 version).</li>
+<li>Let it build (10–30 min). Check after: <code>codertarget.pixhawk.internal.getPX4BaseDir()</code> prints a folder.</li>
+</ol>
+<b>Do NOT reinstall/update</b> the PX4 package or Raspberry Pi Blockset afterwards — that wipes the MathWorks patches.</div>
+
+<h2 id="net">3. Network: laptop ↔ drone</h2>
+<h3>Option 1 (recommended): TP-Link Wi-Fi + phone USB tethering</h3>
+<ol>
+<li>Plug phone by USB → phone settings → turn on <b>USB tethering</b>. Laptop now has internet over USB (MATLAB licence + Claude keep working).</li>
+<li>Laptop Wi-Fi → join the <b>TP-Link</b> network, password <code>16142992</code>. Windows may say "No internet" — fine.</li>
+<li>Check: open <b>cmd</b> → <code>ipconfig</code>. The Wi-Fi adapter must show <code>192.168.0.x</code>.</li>
+<li>Check the Pi: <code>ping 192.168.0.204</code> → replies = good.</li>
+<li>If web pages stop working: Windows is using the TP-Link for internet. Open PowerShell <b>as admin</b>:
+<pre>Get-NetIPInterface -AddressFamily IPv4 | Sort InterfaceMetric | ft ifIndex,InterfaceAlias,InterfaceMetric
+Set-NetIPInterface -InterfaceAlias "Wi-Fi" -InterfaceMetric 50</pre>
+(Lower number = preferred for internet. The 192.168.0.x drone traffic still goes over Wi-Fi.)</li>
+</ol>
+<h3>Option 2: TP-Link only (no internet)</h3>
+<p>Works only if MATLAB was started while online and stays open. Claude is not reachable.</p>
+
+<h3>Pi IP changed / unknown? Find it</h3>
+<ul>
+<li>Browser → <code>http://192.168.0.1</code> (or <code>http://tplinkwifi.net</code>) → TP-Link admin → <b>DHCP → Client List</b> → look for <code>rpib</code>.</li>
+<li>cmd: <code>ping rpib</code> or <code>ping rpib.local</code> → shows the IP.</li>
+<li>cmd: <code>arp -a</code> → list of 192.168.0.x devices.</li>
+<li>Then in MATLAB: <code>set_drone_ip('NEW.IP.HERE')</code></li>
+</ul>
+
+<h3>SSH into the Pi (check it is alive)</h3>
+<pre>ssh rpi@192.168.0.204        (password: rpib)
+ls /dev/ttyACM*              (Pixhawk on USB → shows /dev/ttyACM0)
+df -h                        (free space)
+exit</pre>
+
+<h2 id="matlab">4. Open MATLAB the right way</h2>
+<ol>
+<li>Start MATLAB normally (not admin), ideally while internet is available.</li>
+<li>Command Window (<code>&gt;&gt;</code> prompt — <b>not</b> Windows cmd):
+<pre>openProject('C:\Users\kkjjk\MATLAB\Projects\examples\PX4MultiCopterPerceptionAndControl')
+Simulation                    % must print 0 (false)
+set_drone_ip('192.168.0.204') % prints "Ping OK" when on the drone network
+r = raspi('192.168.0.204','rpi','rpib')   % connects; prints board info</pre></li>
+<li>If <code>Simulation</code> prints 1: run <code>Simulation = false;</code> and tell Claude (InitVars edit was lost).</li>
+</ol>
+<div class="box warn">Do <b>not</b> run <code>PX4MultiCopterPerceptionAndControlStart</code> again — it unpacks a <b>fresh stock copy</b> (no x68 guidance, Simulation=true) over the project.</div>
+
+<h2 id="deploy">5. Feed the code to the drone</h2>
+<div class="box warn"><b>Props OFF</b> for every upload and bench test. Pixhawk connected to the Pi by USB. Battery charged.</div>
+
+<h3>Step 1 — Flight controller → Pixhawk 6C (through the Pi)</h3>
+<pre>Step_1_Deploy_Controller</pre>
+<p>Builds <code>flightControlSystem</code> as PX4 firmware, copies it to the Pi, and the Pi flashes the Pixhawk over USB. Takes several minutes. Ends with a success message. Errors list an "Action:" line — follow it.</p>
+
+<h3>Step 2 — Perception + our guidance → Raspberry Pi</h3>
+<pre>Step_2_Deploy_PerceptionModel
+slbuild('PerceptionAndGuidance')     % build, deploy and start on the Pi</pre>
+<p>(Same as clicking <b>Hardware → Build, Deploy &amp; Start</b> in the PerceptionAndGuidance model window.) The first build compiles on the Pi Zero, so it is slow (5–15 min). Do not unplug.</p>
+
+<h3>Optional: watch the camera live</h3>
+<p>In the PerceptionAndGuidance window: Hardware tab → <b>Monitor &amp; Tune</b> (External mode). Uses the network, slows the Pi; for checks only, not for scored flights.</p>
+
+<h2 id="fly">6. Flight checklist</h2>
+<ol>
+<li>Pixhawk calibrated (accel, compass, RC) in QGroundControl. <code>MAV_SYS_ID = 1</code>.</li>
+<li>Ground telemetry radio NETID = <b>21</b> (else you may talk to another team's drone).</li>
+<li>Arena: red 0.1 m line, even lighting, fans/AC off near arena (sim fails in strong draft).</li>
+<li>First: props on, kill switch in hand, short hover only. Then the simple <code>default</code>-style track.</li>
+<li>Expected behaviour (from sim): flies 1.0 m high, follows line, centres on circle, descends 0.2 m/s, disarms at 0.1 m. If line lost: searches 25 s then lands where it is.</li>
+</ol>
+
+<h2 id="hotspot">7. Moving the Pi to the laptop hotspot (optional, risky)</h2>
+<p>Possible, but only do it if the TP-Link route fails. If the Pi cannot find the hotspot, it is unreachable until you edit the SD card. Keep the TP-Link profile so the Pi falls back to it.</p>
+<ol>
+<li>Laptop: Settings → Network → <b>Mobile hotspot</b> → band <b>2.4 GHz</b> (Pi Zero has no 5 GHz) → set name e.g. <code>ENTITY_HS</code> and a password → turn On.</li>
+<li>While still on the TP-Link: <code>ssh rpi@192.168.0.204</code>, then:
+<pre># Raspberry Pi OS Bookworm (NetworkManager):
+sudo nmcli dev wifi connect "ENTITY_HS" password "YOUR_HS_PASSWORD"
+#   -> SSH drops; the Pi moves to the hotspot. TP-Link profile is kept.
+
+# Older OS (Bullseye, no nmcli): add a block, then reboot
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+network={
+    ssid="ENTITY_HS"
+    psk="YOUR_HS_PASSWORD"
+    priority=10
+}
+sudo reboot</pre></li>
+<li>Find the new IP: laptop Settings → Mobile hotspot → <b>Connected devices</b> (shows <code>rpib</code> + IP, usually <code>192.168.137.x</code>), or cmd <code>arp -a</code>.</li>
+<li>MATLAB: <code>set_drone_ip('192.168.137.x')</code></li>
+<li>To go back: turn the hotspot off → Pi reconnects to the TP-Link → <code>set_drone_ip('192.168.0.204')</code>.</li>
+</ol>
+<p>Note: Windows hotspot normally needs an internet source to share (e.g. phone USB tethering). Option 1 in section 3 gives the same result with less risk.</p>
+
+<h2 id="trouble">8. Troubleshooting</h2>
+<table>
+<tr><th>Message / symptom</th><th>Fix</th></tr>
+<tr><td><code>Error connecting to SSH server at 192.168.0.204</code></td><td>Laptop not on TP-Link, or Pi off/booting. <code>ping 192.168.0.204</code>. Find IP (section 3), <code>set_drone_ip</code>.</td></tr>
+<tr><td><code>PX4BaseDirNotFound</code> / <code>Unable to find the location of PX4 Firmware</code></td><td>PX4 Hardware Setup not done (section 2B). Needs internet.</td></tr>
+<tr><td>Pixhawk not found / <code>/dev/ttyACM*</code> missing on Pi</td><td>Reseat USB cable Pi ↔ Pixhawk; power-cycle; re-run Step 1.</td></tr>
+<tr><td>MATLAB asks to sign in / licence error</td><td>No internet: use phone USB tethering (section 3, option 1).</td></tr>
+<tr><td><code>Undefined function rotm2eul</code></td><td>Path broken again: <code>restoredefaultpath; rehash toolboxcache; savepath</code>, restart MATLAB.</td></tr>
+<tr><td><code>LibcameraVideoCapture cannot be found</code></td><td><code>rehash toolboxcache</code>, then close &amp; reopen the model.</td></tr>
+<tr><td>Drone drifts / misses line immediately</td><td>Lighting/colour issue or camera orientation. Land, check camera view with Monitor &amp; Tune.</td></tr>
+<tr><td>Need desktop simulation again</td><td><code>scripts/InitVars.m</code>: change <code>Simulation = false;</code> to <code>true</code>.</td></tr>
+<tr><td>Undo Pi camera patch</td><td><code>applyRpib26bPatch(Mode="restore", BackupFolder="C:\Users\kkjjk\minidrone_patches\rpi\backup\rpib26bPatch_20261125_095930")</code></td></tr>
+</table>
+</main>
+</body>
+</html>

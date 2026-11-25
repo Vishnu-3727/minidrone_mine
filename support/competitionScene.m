@@ -4,8 +4,9 @@
 function competitionScene(Actor, World)
 
 	% @brief Adds a grey floor to the scene.
+    floorThickness = 0.1;  % floor slab thickness (m)
     floor = sim3d.Actor('ActorName', 'floor');
-    createShape(floor, 'box', [5 5 0.1]); % 5x5 meters floor with 0.1 meters thickness
+    createShape(floor, 'box', [5 5 floorThickness]); % 5x5 meters floor
     floor.Color = [0.37 0.5 0.33]; % Grey color
     floor.Metallic = 0.1;
     floor.Specular = 0.1;
@@ -64,6 +65,16 @@ function competitionScene(Actor, World)
 
 	lineWidth = 0.1;
 
+	% @brief Standardized placement for all flat floor decals (lines, corners,
+	% circle, squares). Everything is positioned relative to the floor's TOP
+	% surface so nothing sinks into the slab, with a small per-layer offset to
+	% avoid z-fighting between overlapping decals.
+	floorTop      = floorLevel + floorThickness/2; % actual top surface of the floor
+	decalGap      = 0.005;                          % clearance above the floor
+	layerStep     = 0.002;                          % vertical spacing between stacked decals
+	zLine         = floorTop + decalGap;            % base markings (lines, circle, squares)
+	zCorner       = zLine + layerStep;              % corners sit just above lines to cover joints
+
 	% @brief Loads or creates initialization data.
     if isfile(initFilePath)
         initData = load(initFilePath);
@@ -102,7 +113,7 @@ function competitionScene(Actor, World)
 		% Set the position to the midpoint of the line
     	midX = (startX + endX) / 2;
     	midY = (startY + endY) / 2;
-    	line_actor.Translation = [midX midY 0.02];
+    	line_actor.Translation = [midX midY zLine];
 	
     	% Set the rotation based on the angle
     	line_actor.Rotation = [0 0 angle];
@@ -129,7 +140,7 @@ function competitionScene(Actor, World)
 			corner_actor.Color = [1 0 0];
 		end
 
-    	corner_actor.Translation = [jointX, jointY, 0.001];
+    	corner_actor.Translation = [jointX, jointY, zCorner];
     	corner_actor.Rotation = [0 0 0];
     	World.add(corner_actor, Actor);
 	end
@@ -143,7 +154,7 @@ function competitionScene(Actor, World)
         red_circle.Color = [1 0 0];
     end
 
-    red_circle.Translation = [initData.Circle.X initData.Circle.Y initData.Circle.Z]; 
+    red_circle.Translation = [initData.Circle.X initData.Circle.Y zLine];
     World.add(red_circle, Actor);
     
 	% @brief Creates the yellow square at the beginning of the L-shape.
@@ -155,7 +166,7 @@ function competitionScene(Actor, World)
     yellow_square.Specular = 0.5;
     yellow_square.Friction = 0.7;
     yellow_square.Restitution = 0.3;
-    yellow_square.Translation = [0.5 2 0.02];
+    yellow_square.Translation = [0.5 2 zLine];
     World.add(yellow_square, Actor);
     
 	% @brief Creates the blue square at the beginning of the L-shape.
@@ -167,6 +178,25 @@ function competitionScene(Actor, World)
     blue_square.Specular = 0.5;
     blue_square.Friction = 0.7;
     blue_square.Restitution = 0.3;
-    blue_square.Translation = [0.5 2.5 0.02];
+    blue_square.Translation = [0.5 2.5 zLine];
     World.add(blue_square, Actor);
+
+    % @brief Creates ground pattern tiles as flat box actors on the floor.
+    % Tiles sit just above the floor top surface, below the line/circle decals.
+    tileZ = floorTop + 0.001;  % 1 mm above floor surface
+    if isfield(initData, 'GroundPattern') && ~isempty(initData.GroundPattern)
+        for i = 1:numel(initData.GroundPattern)
+            tile = initData.GroundPattern(i);
+            tileActor = sim3d.Actor('ActorName', sprintf('ground_tile_%d', i));
+            createShape(tileActor, 'box', [tile.Width tile.Depth 0.001]);
+            tileActor.Translation = [tile.CenterX tile.CenterY tileZ];
+            tileActor.Rotation = [0 0 tile.Angle];
+            tileActor.Color = tile.Color;
+            tileActor.Metallic = 0;
+            tileActor.Specular = 0.1;
+            tileActor.Shininess = 0;
+            tileActor.Collisions = 0;
+            World.add(tileActor, Actor);
+        end
+    end
 end

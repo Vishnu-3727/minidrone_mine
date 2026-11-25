@@ -51,7 +51,7 @@ if isfile(initFilePath)
     initData = load(initFilePath);
     init.posNED = initData.posNED;
 else
-    init.posNED = [0, 0, init.equilibriumZ];
+    init.posNED = [0.5, 1, init.equilibriumZ];
 end
 
 init.vb = [0 0 0]'; %m/s
@@ -240,11 +240,12 @@ PWMInput(8) = Simulink.BusElement; PWMInput(8).Name = 'M8';
 setPWMInput = Simulink.Bus;
 setPWMInput.Elements = PWMInput;
 
-if ~exist('Simulation', 'var') || isempty(Simulation)
-	Simulation = true;
-end
+% ENTITY hardware setup (2026-11-25): always build for the real drone.
+% To run the desktop simulation again, change false to true here.
+Simulation = false;
 
-TFinal = 100;
+% ENTITY 2026-11-25: was 100 s, which stopped the model mid-flight (log 39). Run until stopped.
+TFinal = inf;
 
 % Set Preferences to configure Wait-For-Host 
 setpref('MW_SCI_CDC_WAIT_FOR_HOST','CheckEnabled','true');
