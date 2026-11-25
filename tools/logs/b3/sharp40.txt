@@ -1,0 +1,24 @@
+FLIGHT sharp40   (2026-11-25 01:49)
+track: 2 sections, 4.50 m, angles 40 deg, circle at N 1.24 E 1.98
+result: PASS | sections 2/2 | landed 1 | land error 0.2 cm | path error mean 0.4 max 1.6 cm
+speed: top 0.33 m/s, mean while following 0.29 m/s | cruise altitude 0.99 m | touchdown 29.5 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 0.50 E 0.50  alt 0.05  speed 0.00  heading    -  
+     4.2 s  FOLLOW    at N 0.50 E 0.50  alt 0.96  speed 0.00  heading    -  
+    12.2 s  CORNER    at N 2.86 E 0.50  alt 0.99  speed 0.23  heading    0.2
+    14.9 s  FOLLOW    at N 2.97 E 0.51  alt 0.99  speed 0.02  heading  142.2
+    21.1 s  CORNER    at N 1.56 E 1.71  alt 0.99  speed 0.32  heading  139.8
+    21.3 s  COAST     at N 1.51 E 1.75  alt 0.99  speed 0.29  heading  139.8
+    22.9 s  APPROACH  at N 1.32 E 1.91  alt 0.99  speed 0.12  heading  139.8
+    24.7 s  DESCEND   at N 1.22 E 2.00  alt 0.99  speed 0.02  heading  139.8
+    29.5 s  LANDED    at N 1.24 E 1.98  alt 0.04  speed 0.00  heading  139.8
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 3.00 E 0.50,  40 deg): closest 0.8 cm at 13.6 s, overshoot 0.0 cm
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 0.0 cm (p2p 0.1), yaw wobble 0.1 deg (p2p 0.6)
+  leg 2: sway 0.7 cm (p2p 2.0), yaw wobble 1.2 deg (p2p 4.8)
+
+WARNINGS: none

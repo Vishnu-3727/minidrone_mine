@@ -1,8 +1,9 @@
 function generateFlightCode()
-% GENERATEFLIGHTCODE generates code for deployment in the Parrot (R) mini
+% GENERATEFLIGHTCODE generates code for deployment in the PX4
 % drone. It requires Embedded Coder (R) and Simulink Coder (TM).
 
-% Copyright 2017-2024 The MathWorks, Inc.
+% Copyright 2026 The MathWorks, Inc.
+assignin('base', 'Simulation', false);
 
 model = 'flightControlSystem';
 open_system(model);

@@ -1,0 +1,24 @@
+FLIGHT sharp33   (2026-11-25 00:35)
+track: 2 sections, 5.00 m, angles 33 deg, circle at N 2.52 E 3.35
+result: PASS | sections 2/2 | landed 1 | land error 0.3 cm | path error mean 2.2 max 8.1 cm
+speed: top 0.42 m/s, mean while following 0.33 m/s | cruise altitude 1.55 m | touchdown 30.2 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 1.00 E 3.50  alt 0.05  speed 0.00  heading    -  
+     3.2 s  FOLLOW    at N 1.00 E 3.50  alt 1.53  speed 0.00  heading    -  
+    10.2 s  CORNER    at N 1.01 E 1.23  alt 1.56  speed 0.38  heading  -88.8
+    13.2 s  FOLLOW    at N 1.00 E 1.04  alt 1.55  speed 0.05  heading   60.1
+    19.2 s  CORNER    at N 2.21 E 2.87  alt 1.55  speed 0.41  heading   57.2
+    19.8 s  COAST     at N 2.32 E 3.05  alt 1.55  speed 0.28  heading   57.2
+    20.2 s  APPROACH  at N 2.37 E 3.11  alt 1.55  speed 0.16  heading   57.2
+    23.0 s  DESCEND   at N 2.53 E 3.37  alt 1.54  speed 0.03  heading   57.2
+    30.2 s  LANDED    at N 2.52 E 3.35  alt 0.05  speed 0.00  heading   57.2
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 1.00 E 1.00,  33 deg): closest 0.9 cm at 12.6 s, overshoot 3.7 cm
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 2.9 cm (p2p 8.5), yaw wobble 2.1 deg (p2p 6.1)   <-- wobble
+  leg 2: sway 1.3 cm (p2p 4.0), yaw wobble 1.8 deg (p2p 6.5)
+
+WARNINGS: none

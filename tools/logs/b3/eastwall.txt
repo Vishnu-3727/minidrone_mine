@@ -1,0 +1,24 @@
+FLIGHT eastwall   (2026-11-25 02:08)
+track: 2 sections, 2.99 m, angles 63 deg, circle at N 2.15 E 3.76
+result: PASS | sections 2/2 | landed 1 | land error 0.2 cm | path error mean 1.2 max 5.2 cm
+speed: top 0.33 m/s, mean while following 0.28 m/s | cruise altitude 0.99 m | touchdown 25.1 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 2.50 E 2.00  alt 0.05  speed 0.00  heading    -  
+     4.2 s  FOLLOW    at N 2.50 E 2.00  alt 0.96  speed 0.00  heading    -  
+     8.8 s  CORNER    at N 3.63 E 2.57  alt 0.99  speed 0.32  heading   28.5
+    11.2 s  FOLLOW    at N 3.70 E 2.63  alt 0.99  speed 0.05  heading  151.7
+    16.3 s  CORNER    at N 2.49 E 3.51  alt 0.99  speed 0.33  heading  144.0
+    16.6 s  COAST     at N 2.42 E 3.56  alt 0.99  speed 0.26  heading  144.0
+    18.4 s  APPROACH  at N 2.24 E 3.68  alt 0.99  speed 0.11  heading  144.0
+    20.3 s  DESCEND   at N 2.13 E 3.77  alt 0.99  speed 0.02  heading  144.0
+    25.1 s  LANDED    at N 2.15 E 3.75  alt 0.04  speed 0.00  heading  144.0
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 3.71 E 2.62,  63 deg): closest 0.5 cm at 9.2 s, overshoot 5.2 cm
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 0.6 cm (p2p 1.7), yaw wobble 0.4 deg (p2p 1.6)
+  leg 2: sway 1.0 cm (p2p 3.2), yaw wobble 0.6 deg (p2p 2.3)
+
+WARNINGS: none

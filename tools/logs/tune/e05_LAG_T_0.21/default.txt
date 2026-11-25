@@ -1,0 +1,24 @@
+FLIGHT default   (2026-11-25 03:52)
+track: 2 sections, 4.00 m, angles 89 deg, circle at N 2.44 E 3.30
+result: PASS | sections 2/2 | landed 1 | land error 0.3 cm | path error mean 2.3 max 14.4 cm
+speed: top 0.37 m/s, mean while following 0.31 m/s | cruise altitude 0.99 m | touchdown 27.4 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 0.50 E 1.00  alt 0.05  speed 0.00  heading    -  
+     4.6 s  FOLLOW    at N 0.50 E 1.00  alt 0.96  speed 0.00  heading    -  
+    10.8 s  CORNER    at N 2.46 E 1.00  alt 0.99  speed 0.37  heading    2.1
+    13.6 s  FOLLOW    at N 2.51 E 1.04  alt 0.99  speed 0.07  heading   97.5
+    19.5 s  CORNER    at N 2.46 E 2.90  alt 0.99  speed 0.37  heading   91.4
+    19.7 s  COAST     at N 2.45 E 2.97  alt 0.99  speed 0.33  heading   91.4
+    21.0 s  APPROACH  at N 2.44 E 3.19  alt 0.99  speed 0.13  heading   91.4
+    22.7 s  DESCEND   at N 2.44 E 3.32  alt 0.99  speed 0.02  heading   91.4
+    27.4 s  LANDED    at N 2.44 E 3.30  alt 0.05  speed 0.00  heading   91.4
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 2.50 E 1.00,  89 deg): closest 0.7 cm at 10.9 s, overshoot 14.4 cm   <-- overshoot
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 0.0 cm (p2p 0.0), yaw wobble 0.1 deg (p2p 0.4)
+  leg 2: sway 1.9 cm (p2p 5.2), yaw wobble 0.4 deg (p2p 1.7)   <-- wobble
+
+WARNINGS: path error 14 cm

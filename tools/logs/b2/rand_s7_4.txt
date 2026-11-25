@@ -1,0 +1,32 @@
+FLIGHT rand_s7_4   (2026-11-25 01:45)
+track: 3 sections, 2.80 m, angles [153 152] deg, circle at N 1.18 E 3.60
+result: FAIL | sections 3/3 | landed 0 | land error 146.6 cm | path error mean 6.6 max 31.3 cm
+speed: top 0.58 m/s, mean while following 0.22 m/s | cruise altitude 0.99 m | touchdown never
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 1.18 E 0.59  alt 0.05  speed 0.00  heading    -  
+     4.2 s  FOLLOW    at N 1.18 E 0.59  alt 0.96  speed 0.00  heading    -  
+     8.5 s  CORNER    at N 0.97 E 1.51  alt 0.99  speed 0.30  heading   95.7
+    14.6 s  FOLLOW    at N 1.12 E 2.02  alt 0.99  speed 0.09  heading   75.3
+    17.8 s  CORNER    at N 1.42 E 2.88  alt 0.99  speed 0.31  heading   88.7
+    23.8 s  FOLLOW    at N 1.26 E 3.27  alt 0.99  speed 0.02  heading  -82.2
+    27.6 s  COAST     at N 1.36 E 2.69  alt 0.99  speed 0.13  heading  -78.9
+    34.8 s  SEARCH    at N 1.51 E 1.90  alt 1.00  speed 0.11  heading  -78.9
+    39.4 s  FOLLOW    at N 1.47 E 2.13  alt 1.00  speed 0.09  heading  164.9
+    39.7 s  COAST     at N 1.45 E 2.14  alt 1.00  speed 0.07  heading  164.9
+    47.3 s  SEARCH    at N 0.67 E 2.34  alt 1.00  speed 0.11  heading  164.9
+    49.0 s  FOLLOW    at N 1.26 E 2.20  alt 1.00  speed 0.51  heading -100.8
+    49.4 s  CORNER    at N 1.42 E 2.16  alt 1.00  speed 0.34  heading -102.3
+    51.7 s  FOLLOW    at N 1.46 E 2.15  alt 1.00  speed 0.07  heading -148.4
+    51.8 s  COAST     at N 1.45 E 2.15  alt 1.00  speed 0.06  heading -148.4
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 1.01 E 1.44, 153 deg): closest 3.9 cm at 8.3 s, overshoot 24.6 cm   <-- overshoot
+  vertex 2 (N 1.38 E 2.70, 152 deg): closest 0.5 cm at 17.2 s, overshoot 33.7 cm   <-- overshoot
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 0.6 cm (p2p 1.6), yaw wobble 0.6 deg (p2p 1.8)
+  leg 2: sway 5.7 cm (p2p 21.6), yaw wobble 102.0 deg (p2p 270.8)   <-- wobble
+  leg 3: sway 0.1 cm (p2p 0.2), yaw wobble 0.3 deg (p2p 0.7)
+
+WARNINGS: SEARCH used (line lost); did not land before the time limit; path error 31 cm

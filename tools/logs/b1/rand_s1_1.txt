@@ -1,0 +1,14 @@
+FLIGHT rand_s1_1   (2026-11-25 01:01)
+track: 2 sections, 2.00 m, angles 147 deg, circle at N 1.85 E 0.32
+result: FAIL | sections 0/2 | landed 0 | land error 222.4 cm | path error mean NaN max  cm
+speed: top 0.00 m/s, mean while following NaN m/s | cruise altitude NaN m | touchdown never
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 1.74 E 2.55  alt 0.05  speed 0.00  heading    -  
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 1.51 E 1.96, 147 deg): closest 62.6 cm at 0.0 s, overshoot 0.0 cm   <-- MISSED
+
+STRAIGHTNESS PER LEG (straight flight only)
+
+WARNINGS: did not land before the time limit

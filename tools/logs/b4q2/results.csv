@@ -1,0 +1,5 @@
+track,pass,sections,nSec,landed,landErr_cm,meanErr_cm,maxErr_cm,topSpeed,meanSpeed,touchdown_s,maxSway_cm,maxYawWobble_deg,warnings
+w31,1,4,4,1,0.27,0.92,4.54,0.33,0.27,62.7,3.89,24.19,"none"
+v31,1,4,4,1,0.30,0.77,3.14,0.33,0.27,61.1,4.13,21.90,"none"
+sharp40,1,2,2,1,0.11,0.48,1.80,0.33,0.28,31.6,2.44,4.33,"none"
+default,1,2,2,1,0.27,1.59,11.17,0.33,0.28,29.0,4.07,1.28,"none"

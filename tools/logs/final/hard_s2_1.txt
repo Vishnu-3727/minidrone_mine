@@ -1,0 +1,33 @@
+FLIGHT hard_s2_1   (2026-11-25 05:38)
+track: 4 sections, 2.98 m, angles [60 87 81] deg, circle at N 2.07 E 2.83
+result: PASS | sections 4/4 | landed 1 | land error 0.1 cm | path error mean 3.0 max 11.3 cm
+speed: top 0.33 m/s, mean while following 0.21 m/s | cruise altitude 0.99 m | touchdown 37.5 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 1.09 E 1.31  alt 0.05  speed 0.00  heading    -  
+     4.6 s  FOLLOW    at N 1.09 E 1.31  alt 0.96  speed 0.00  heading    -  
+     8.0 s  CORNER    at N 1.88 E 1.12  alt 0.99  speed 0.32  heading  -11.6
+    11.4 s  FOLLOW    at N 1.96 E 1.14  alt 0.99  speed 0.03  heading  105.8
+    14.4 s  CORNER    at N 1.78 E 1.81  alt 0.99  speed 0.32  heading  104.8
+    17.2 s  FOLLOW    at N 1.79 E 1.88  alt 0.99  speed 0.06  heading   10.1
+    19.8 s  CORNER    at N 2.34 E 2.01  alt 0.99  speed 0.32  heading   16.1
+    22.8 s  FOLLOW    at N 2.40 E 2.08  alt 0.99  speed 0.05  heading  115.9
+    24.9 s  CORNER    at N 2.23 E 2.44  alt 0.99  speed 0.32  heading  113.4
+    27.3 s  FOLLOW    at N 2.21 E 2.54  alt 0.99  speed 0.07  heading  104.3
+    27.4 s  COAST     at N 2.21 E 2.53  alt 0.99  speed 0.07  heading  104.3
+    30.4 s  APPROACH  at N 2.16 E 2.73  alt 0.99  speed 0.11  heading  104.3
+    32.8 s  DESCEND   at N 2.07 E 2.85  alt 0.99  speed 0.02  heading  104.3
+    37.5 s  LANDED    at N 2.08 E 2.83  alt 0.05  speed 0.00  heading  104.3
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 1.99 E 1.10,  60 deg): closest 0.1 cm at 8.4 s, overshoot 7.5 cm
+  vertex 2 (N 1.75 E 1.86,  87 deg): closest 1.5 cm at 14.6 s, overshoot 11.2 cm   <-- overshoot
+  vertex 3 (N 2.42 E 2.04,  81 deg): closest 0.7 cm at 20.1 s, overshoot 10.1 cm   <-- overshoot
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 0.1 cm (p2p 0.2), yaw wobble 0.2 deg (p2p 0.6)
+  leg 2: sway 0.5 cm (p2p 1.5), yaw wobble 0.8 deg (p2p 2.1)
+  leg 3: sway 0.3 cm (p2p 0.8), yaw wobble 0.2 deg (p2p 0.6)
+  leg 4: sway 0.1 cm (p2p 0.2), yaw wobble 0.1 deg (p2p 0.1)
+
+WARNINGS: none

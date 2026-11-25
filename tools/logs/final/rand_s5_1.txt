@@ -1,0 +1,27 @@
+FLIGHT rand_s5_1   (2026-11-25 05:17)
+track: 3 sections, 2.55 m, angles [109 61] deg, circle at N 3.01 E 2.10
+result: PASS | sections 3/3 | landed 1 | land error 0.3 cm | path error mean 2.8 max 12.3 cm
+speed: top 0.33 m/s, mean while following 0.20 m/s | cruise altitude 0.99 m | touchdown 29.7 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 3.19 E 2.97  alt 0.05  speed 0.00  heading    -  
+     4.6 s  FOLLOW    at N 3.19 E 2.97  alt 0.96  speed 0.00  heading    -  
+     8.4 s  CORNER    at N 2.93 E 3.38  alt 0.99  speed 0.30  heading  125.0
+    10.9 s  FOLLOW    at N 2.85 E 3.43  alt 0.99  speed 0.07  heading -157.0
+    13.9 s  CORNER    at N 2.19 E 3.29  alt 0.99  speed 0.32  heading -168.8
+    17.3 s  FOLLOW    at N 2.14 E 3.26  alt 0.99  speed 0.03  heading  -53.8
+    21.4 s  CORNER    at N 2.76 E 2.41  alt 0.99  speed 0.32  heading  -52.9
+    21.6 s  COAST     at N 2.80 E 2.37  alt 0.99  speed 0.27  heading  -52.9
+    23.2 s  APPROACH  at N 2.94 E 2.19  alt 0.99  speed 0.12  heading  -52.9
+    25.0 s  DESCEND   at N 3.02 E 2.08  alt 0.99  speed 0.02  heading  -52.9
+    29.7 s  LANDED    at N 3.01 E 2.10  alt 0.05  speed 0.00  heading  -52.9
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 2.95 E 3.41, 109 deg): closest 3.4 cm at 8.4 s, overshoot 14.7 cm   <-- overshoot
+  vertex 2 (N 2.10 E 3.28,  61 deg): closest 0.9 cm at 14.2 s, overshoot 8.8 cm
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 2: sway 0.5 cm (p2p 1.4), yaw wobble 0.2 deg (p2p 0.6)
+  leg 3: sway 0.5 cm (p2p 1.7), yaw wobble 0.6 deg (p2p 2.0)
+
+WARNINGS: path error 12 cm

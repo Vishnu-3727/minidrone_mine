@@ -1,0 +1,37 @@
+FLIGHT hard_s3_1   (2026-11-25 05:42)
+track: 5 sections, 3.58 m, angles [85 51 52 71] deg, circle at N 3.47 E 1.91
+result: PASS | sections 5/5 | landed 1 | land error 0.2 cm | path error mean 2.8 max 11.7 cm
+speed: top 0.33 m/s, mean while following 0.21 m/s | cruise altitude 0.99 m | touchdown 39.8 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 1.06 E 1.85  alt 0.05  speed 0.00  heading    -  
+     4.6 s  FOLLOW    at N 1.06 E 1.85  alt 0.96  speed 0.00  heading    -  
+     8.3 s  CORNER    at N 1.92 E 2.13  alt 0.99  speed 0.32  heading   15.0
+    11.2 s  FOLLOW    at N 1.98 E 2.10  alt 0.99  speed 0.05  heading  -79.5
+    13.5 s  CORNER    at N 2.07 E 1.65  alt 0.99  speed 0.32  heading  -77.2
+    17.2 s  FOLLOW    at N 2.12 E 1.60  alt 0.99  speed 0.01  heading   48.4
+    19.8 s  CORNER    at N 2.50 E 2.01  alt 0.99  speed 0.31  heading   48.5
+    23.4 s  FOLLOW    at N 2.54 E 2.06  alt 0.99  speed 0.02  heading  -74.1
+    26.1 s  CORNER    at N 2.72 E 1.49  alt 0.99  speed 0.31  heading  -73.5
+    29.2 s  FOLLOW    at N 2.74 E 1.45  alt 0.99  speed 0.04  heading   32.7
+    31.4 s  CORNER    at N 3.11 E 1.69  alt 0.99  speed 0.32  heading   32.2
+    31.6 s  FOLLOW    at N 3.17 E 1.71  alt 0.99  speed 0.29  heading   26.8
+    31.7 s  COAST     at N 3.19 E 1.73  alt 0.99  speed 0.26  heading   26.8
+    33.2 s  APPROACH  at N 3.39 E 1.83  alt 0.99  speed 0.12  heading   26.8
+    35.1 s  DESCEND   at N 3.49 E 1.91  alt 1.00  speed 0.02  heading   26.8
+    39.8 s  LANDED    at N 3.47 E 1.90  alt 0.05  speed 0.00  heading   26.8
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 1.98 E 2.14,  85 deg): closest 0.7 cm at 8.5 s, overshoot 11.6 cm   <-- overshoot
+  vertex 2 (N 2.11 E 1.55,  51 deg): closest 0.8 cm at 13.9 s, overshoot 6.9 cm
+  vertex 3 (N 2.55 E 2.11,  52 deg): closest 2.3 cm at 22.3 s, overshoot 6.3 cm
+  vertex 4 (N 2.71 E 1.42,  71 deg): closest 2.1 cm at 26.3 s, overshoot 10.3 cm   <-- overshoot
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 0.1 cm (p2p 0.4), yaw wobble 0.3 deg (p2p 1.0)
+  leg 2: sway 0.2 cm (p2p 0.3), yaw wobble 0.1 deg (p2p 0.2)
+  leg 3: sway 0.4 cm (p2p 1.2), yaw wobble 0.7 deg (p2p 1.8)
+  leg 4: sway 0.4 cm (p2p 1.1), yaw wobble 0.8 deg (p2p 2.1)
+  leg 5: sway 0.2 cm (p2p 0.4), yaw wobble 0.1 deg (p2p 0.1)
+
+WARNINGS: none

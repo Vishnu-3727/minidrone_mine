@@ -1,0 +1,33 @@
+FLIGHT vtrackRot   (2026-11-25 05:56)
+track: 4 sections, 10.35 m, angles [33 35 34] deg, circle at N 3.48 E 0.71
+result: PASS | sections 4/4 | landed 1 | land error 0.0 cm | path error mean 0.9 max 5.8 cm
+speed: top 0.33 m/s, mean while following 0.28 m/s | cruise altitude 0.99 m | touchdown 63.6 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 0.40 E 0.90  alt 0.05  speed 0.00  heading    -  
+     4.6 s  FOLLOW    at N 0.40 E 0.90  alt 0.96  speed 0.00  heading    -  
+    13.5 s  CORNER    at N 1.06 E 3.26  alt 0.99  speed 0.23  heading   72.7
+    17.7 s  FOLLOW    at N 1.11 E 3.35  alt 0.99  speed 0.00  heading  -72.4
+    26.1 s  CORNER    at N 1.86 E 1.02  alt 0.99  speed 0.25  heading  -69.7
+    30.2 s  FOLLOW    at N 1.90 E 0.95  alt 0.99  speed 0.00  heading   71.8
+    38.6 s  CORNER    at N 2.66 E 3.27  alt 1.00  speed 0.23  heading   70.2
+    42.7 s  FOLLOW    at N 2.70 E 3.35  alt 1.00  speed 0.00  heading  -73.5
+    50.7 s  CORNER    at N 3.37 E 1.11  alt 1.00  speed 0.32  heading  -74.1
+    53.1 s  FOLLOW    at N 3.39 E 1.02  alt 1.00  speed 0.07  heading  -59.7
+    53.2 s  COAST     at N 3.39 E 1.03  alt 1.00  speed 0.07  heading  -59.7
+    56.1 s  APPROACH  at N 3.50 E 0.87  alt 1.00  speed 0.11  heading  -59.7
+    58.8 s  DESCEND   at N 3.48 E 0.69  alt 1.00  speed 0.02  heading  -59.7
+    63.5 s  LANDED    at N 3.48 E 0.71  alt 0.05  speed 0.00  heading  -59.7
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 1.10 E 3.40,  33 deg): closest 0.9 cm at 14.8 s, overshoot 0.0 cm
+  vertex 2 (N 1.90 E 0.90,  35 deg): closest 0.9 cm at 26.9 s, overshoot 1.5 cm
+  vertex 3 (N 2.70 E 3.40,  34 deg): closest 1.2 cm at 39.6 s, overshoot 0.7 cm
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 1.4 cm (p2p 3.9), yaw wobble 1.1 deg (p2p 5.8)
+  leg 2: sway 0.8 cm (p2p 2.5), yaw wobble 1.0 deg (p2p 4.9)
+  leg 3: sway 0.9 cm (p2p 2.5), yaw wobble 1.0 deg (p2p 4.8)
+  leg 4: sway 0.8 cm (p2p 2.3), yaw wobble 1.0 deg (p2p 4.9)
+
+WARNINGS: none

@@ -1,0 +1,5 @@
+track,pass,sections,nSec,landed,landErr_cm,meanErr_cm,maxErr_cm,topSpeed,meanSpeed,touchdown_s,maxSway_cm,maxYawWobble_deg,warnings
+default,1,2,2,1,0.27,1.59,11.17,0.33,0.28,29.0,4.07,1.28,"none"
+w31,0,2,4,1,0.28,0.98,8.69,0.33,0.26,71.7,10.40,106.21,"none"
+sharp33,1,2,2,1,0.33,0.81,3.21,0.33,0.27,34.0,4.04,9.76,"none"
+zigzag7,1,7,7,1,0.29,2.68,12.54,0.33,0.26,61.1,3.83,3.14,"path error 13 cm"

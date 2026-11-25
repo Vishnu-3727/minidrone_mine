@@ -1,0 +1,33 @@
+FLIGHT hard_s1_1   (2026-11-25 04:40)
+track: 4 sections, 2.93 m, angles [73 76 63] deg, circle at N 2.18 E 3.53
+result: PASS | sections 4/4 | landed 1 | land error 0.2 cm | path error mean 2.6 max 10.5 cm
+speed: top 0.33 m/s, mean while following 0.21 m/s | cruise altitude 0.99 m | touchdown 35.6 s
+
+TIMELINE
+     0.0 s  TAKEOFF   at N 1.50 E 1.89  alt 0.05  speed 0.00  heading    -  
+     4.6 s  FOLLOW    at N 1.50 E 1.89  alt 0.96  speed 0.00  heading    -  
+     8.4 s  CORNER    at N 2.44 E 2.04  alt 0.99  speed 0.32  heading   11.1
+    12.2 s  FOLLOW    at N 2.49 E 2.09  alt 0.99  speed 0.01  heading  111.7
+    15.1 s  CORNER    at N 2.22 E 2.69  alt 0.99  speed 0.32  heading  113.5
+    18.8 s  FOLLOW    at N 2.24 E 2.74  alt 0.99  speed 0.01  heading   16.7
+    21.0 s  CORNER    at N 2.65 E 2.85  alt 0.99  speed 0.32  heading   13.8
+    25.1 s  FOLLOW    at N 2.68 E 2.89  alt 0.99  speed 0.00  heading  125.2
+    27.2 s  CORNER    at N 2.46 E 3.21  alt 0.99  speed 0.32  heading  129.5
+    27.5 s  FOLLOW    at N 2.40 E 3.28  alt 0.99  speed 0.26  heading  134.6
+    27.6 s  COAST     at N 2.39 E 3.29  alt 0.99  speed 0.23  heading  134.6
+    29.1 s  APPROACH  at N 2.26 E 3.44  alt 0.99  speed 0.11  heading  134.6
+    30.9 s  DESCEND   at N 2.17 E 3.54  alt 0.99  speed 0.02  heading  134.6
+    35.6 s  LANDED    at N 2.18 E 3.53  alt 0.05  speed 0.00  heading  134.6
+
+CORNERS (closest approach to each vertex, in order)
+  vertex 1 (N 2.53 E 2.06,  73 deg): closest 0.2 cm at 8.7 s, overshoot 9.6 cm
+  vertex 2 (N 2.18 E 2.75,  76 deg): closest 1.5 cm at 15.3 s, overshoot 10.3 cm   <-- overshoot
+  vertex 3 (N 2.73 E 2.87,  63 deg): closest 0.5 cm at 21.3 s, overshoot 9.5 cm
+
+STRAIGHTNESS PER LEG (straight flight only)
+  leg 1: sway 0.1 cm (p2p 0.3), yaw wobble 0.1 deg (p2p 0.5)
+  leg 2: sway 0.3 cm (p2p 0.8), yaw wobble 0.1 deg (p2p 0.2)
+  leg 3: sway 0.1 cm (p2p 0.1), yaw wobble 0.1 deg (p2p 0.1)
+  leg 4: sway 0.1 cm (p2p 0.2), yaw wobble 0.1 deg (p2p 0.2)
+
+WARNINGS: none
