@@ -9,7 +9,7 @@ function [traj, dbg] = trackGuidance(mask, pos)
 % depend on altitude. States: 0 TAKEOFF 1 FOLLOW 2 CORNER 3 COAST 4 SEARCH 5 APPROACH 6 DESCEND 7 LANDED
 
 %% ---------------- parameters (all in metres / radians unless noted) ----------------
-ALT        = 1.0;          % flight altitude (footprint 0.84 x 0.63 m, line 19 px): sees 0.31 m ahead
+ALT        = 1.3;          % flight altitude (footprint 0.84 x 0.63 m, line 19 px): sees 0.31 m ahead
 K08        = 0.0042;       % camera scale measured at 0.8 m, m/px (Unreal camera)
 RC = 60.5; CC = 80.5;      % optical centre (row, col)
 FRAME_DT   = 0.1;          % guidance frame period, s (10 Hz: camera + decision every 0.1 s)
