@@ -64,8 +64,9 @@ COAST_STEP = 0.12;         % carrot while coasting past the line end
 COAST_MAX  = 0.80;         % then search
 SEARCH_R   = 0.60;         % spiral radius limit
 SEARCH_T   = 25;           % s, then land where we are
-LAND_TOL   = 0.05;         % centred over the circle
-LAND_HOLD  = round(1.0/FRAME_DT);   % centred for 1 s before descending
+LAND_TOL   = 0.075;        % centred over the circle (2026-11-26: 7.5 cm, was 5 cm: real drone hovered without landing)
+LAND_HOLD  = round(0.5/FRAME_DT);   % centred for 0.5 s before descending
+APPROACH_T = 5.0;          % s over the circle: descend anyway (keeps centring on the way down)
 DESC_RATE  = 0.35;         % m/s down to 0.8 m, then DESC_SLOW
 DESC_SLOW  = 0.20;         % m/s for the last 0.8 m (gentle touchdown)
 CLIMB_RATE = 0.5;          % m/s, take-off height target ramp
@@ -282,7 +283,7 @@ if nc > 0, lastLineP = p; end
 
 %% ---------------- 6. state machine ----------------
 spN = sp(1); spE = sp(2); zC = -ALT; yC = sp(4);
-if circOK && st >= 1 && st <= 4, st = 5; circEst = circLast; cnt = 0; end   % circle confirmed: go land on it
+if circOK && st >= 1 && st <= 4, st = 5; circEst = circLast; cnt = 0; tState = t; end   % circle confirmed: go land on it
 switch st
     case 0  % TAKEOFF
         % ramp the height target (a 2 m step winds up PX4's height integrator: +0.3 m overshoot)
@@ -401,7 +402,7 @@ switch st
     case 3  % COAST
         minD = inf; for i = 1:nc, minD = min(minD, abs(wrapA(cand(i,1) - heading))); end
         if circOK
-            st = 5; circEst = circLast; cnt = 0;
+            st = 5; circEst = circLast; cnt = 0; tState = t;
         elseif minD < AHEAD
             st = 1; tState = t;
         elseif norm(p - coast0) > COAST_MAX
@@ -411,7 +412,7 @@ switch st
         end
     case 4  % SEARCH
         if circOK
-            st = 5; circEst = circLast; cnt = 0;
+            st = 5; circEst = circLast; cnt = 0; tState = t;
         elseif nc > 0
             bi = 1; bd = inf;
             for i = 1:nc, d1 = abs(wrapA(cand(i,1) - heading)); if d1 < bd, bd = d1; bi = i; end, end
@@ -426,8 +427,8 @@ switch st
     case 5  % APPROACH
         if circSeen && norm(circNow - circEst) < 0.08, circEst = 0.7*circEst + 0.3*circNow; end
         spN = circEst(1); spE = circEst(2); yC = yaw;
-        if norm(p - circEst) < LAND_TOL, cnt = cnt + 1; else, cnt = 0; end
-        if cnt >= LAND_HOLD, st = 6; spD = -h; end   % descend from where we are
+        if norm(p - circEst) < LAND_TOL, cnt = cnt + 1; else, cnt = max(cnt - 1, 0); end   % hover jitter does not restart the count
+        if cnt >= LAND_HOLD || t - tState > APPROACH_T, st = 6; spD = -h; end   % descend from where we are
     case 6  % DESCEND
         if h > CIRC_FREEZE && circSeen && norm(circNow - circEst) < 0.05, circEst = 0.8*circEst + 0.2*circNow; end
         if h > 0.8, rate = DESC_RATE; else, rate = DESC_SLOW; end
