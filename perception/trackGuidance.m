@@ -25,8 +25,8 @@ CIRC_AMAX  = 2.5;
 CIRC_ROUND = 0.80;         % circle minor/major spread
 CIRC_FR    = round(0.6/FRAME_DT);   % circle seen for 0.6 s in a row
 CIRC_JUMP  = 0.08;         % consecutive circle fixes agree within this
-LOOK_R     = 0.187;         % look-ahead ring radius on the floor (image half-height = 0.31 m at 1.0 m)
-RING_HALF  = 0.025;        % ring half thickness (5 px at 1 m)
+LOOK_R     = 0.187*ALT;    % look-ahead ring radius, scales with height (0.187 m tuned at 1.0 m; image half-height 0.31 m per m)
+RING_HALF  = 0.025*ALT;    % ring half thickness, scales with height (5 px)
 NB         = 72;           % ring bins
 OCC_FRAC   = 0.30;         % bin occupied above this red fraction
 FAT_BINS   = 8;            % wider crossing = two legs merging (single line ~5-6 bins)
