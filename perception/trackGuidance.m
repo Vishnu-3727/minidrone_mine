@@ -22,7 +22,7 @@ CIRC_D     = 0.20;         % landing circle diameter
 CIRC_TOL   = 0.40;         % circle area within +-40 %
 CIRC_ROUND = 0.80;         % circle minor/major spread
 CIRC_FR    = round(0.6/FRAME_DT);   % circle seen for 0.6 s in a row
-CIRC_JUMP  = 0.05;         % consecutive circle fixes agree within this
+CIRC_JUMP  = 0.08;         % consecutive circle fixes agree within this
 LOOK_R     = 0.187;         % look-ahead ring radius on the floor (image half-height = 0.31 m at 1.0 m)
 RING_HALF  = 0.025;        % ring half thickness (5 px at 1 m)
 NB         = 72;           % ring bins
@@ -62,7 +62,7 @@ COAST_STEP = 0.12;         % carrot while coasting past the line end
 COAST_MAX  = 0.80;         % then search
 SEARCH_R   = 0.60;         % spiral radius limit
 SEARCH_T   = 25;           % s, then land where we are
-LAND_TOL   = 0.03;         % centred over the circle
+LAND_TOL   = 0.05;         % centred over the circle
 LAND_HOLD  = round(1.0/FRAME_DT);   % centred for 1 s before descending
 DESC_RATE  = 0.35;         % m/s down to 0.8 m, then DESC_SLOW
 DESC_SLOW  = 0.20;         % m/s for the last 0.8 m (gentle touchdown)
@@ -74,7 +74,7 @@ TOUCH_H    = 0.06;         % height counted as landed
 NPATH      = 3000;         % flown path points kept (1 cm spacing)
 SCENE_OFF  = [0.5 1];      % the 3D scene draws the drone at NED + this
 PATCH_E0   = 3.1; PATCH_DE = 0.1;   % red brick patch at the arena corner (scene coords)
-HARDWARE   = false;        % <<< set true before deploying to the real drone (no brick patch on a real floor)
+HARDWARE   = true;         % <<< set true before deploying to the real drone (no brick patch on a real floor)
 PATCH_N    = [4.17 3.73 3.59 3.58 3.64 3.70 3.72 3.77 3.87 3.98 4.11 4.20 4.30];
 if HARDWARE, PATCH_N = 99 * ones(1, 13); end   % 99 m: outside any arena, so inPatch is never true
 
