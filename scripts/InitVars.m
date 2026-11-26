@@ -240,11 +240,12 @@ PWMInput(8) = Simulink.BusElement; PWMInput(8).Name = 'M8';
 setPWMInput = Simulink.Bus;
 setPWMInput.Elements = PWMInput;
 
-if ~exist('Simulation', 'var') || isempty(Simulation)
-	Simulation = true;
-end
+% Round 2 hardware (2026-11-26): always build for the real drone. For the desktop simulation,
+% change false to true here.
+Simulation = false;
 
-TFinal = 100;
+% Run until stopped: TFinal = 100 stopped the model mid-flight on 2026-11-25 (log 39).
+TFinal = inf;
 
 % Set Preferences to configure Wait-For-Host 
 setpref('MW_SCI_CDC_WAIT_FOR_HOST','CheckEnabled','true');
