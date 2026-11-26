@@ -19,7 +19,9 @@ LAG_YAW    = 2;
 RED_MIN_PX = 30;           % ignore red specks smaller than this
 LINE_LEN   = 0.35;         % blob longer than this (or border blob longer than 0.22) is line
 CIRC_D     = 0.20;         % landing circle diameter
-CIRC_TOL   = 0.40;         % circle area within +-40 %
+CIRC_TOL   = 0.40;         % (unused since 2026-11-26)
+CIRC_AMIN  = 0.35;         % circle area / expected area: accept 0.35 ... 2.5 (camera scale unknown)
+CIRC_AMAX  = 2.5;
 CIRC_ROUND = 0.80;         % circle minor/major spread
 CIRC_FR    = round(0.6/FRAME_DT);   % circle seen for 0.6 s in a row
 CIRC_JUMP  = 0.08;         % consecutive circle fixes agree within this
@@ -74,6 +76,10 @@ TOUCH_H    = 0.06;         % height counted as landed
 NPATH      = 3000;         % flown path points kept (1 cm spacing)
 SCENE_OFF  = [0.5 1];      % the 3D scene draws the drone at NED + this
 PATCH_E0   = 3.1; PATCH_DE = 0.1;   % red brick patch at the arena corner (scene coords)
+YAW_HOLD   = true;         % 2026-11-26: keep the nose on the take-off heading all flight (no yawing: the
+                           % map uses the yaw at image time, so yawing on the real drone smears it)
+CORE_TEST  = false;        % line-touching-circle test (off: the track has a gap)
+CORE_D     = 0.115;        % circle test: a disk this wide fits inside the circle (0.205 m) but not the line (0.10 m)
 HARDWARE   = true;         % <<< set true before deploying to the real drone (no brick patch on a real floor)
 PATCH_N    = [4.17 3.73 3.59 3.58 3.64 3.70 3.72 3.77 3.87 3.98 4.11 4.20 4.30];
 if HARDWARE, PATCH_N = 99 * ones(1, 13); end   % 99 m: outside any arena, so inPatch is never true
@@ -140,7 +146,9 @@ for k = 1:nL
     tr = (a + b)/2; dd = sqrt(max(((a - b)/2)^2 + cxy^2, 0));
     l1 = max(tr + dd, 0); l2 = max(tr - dd, 0);
     len = sqrt(12*l1); area = n(k) * mpp^2; areaC = pi*(CIRC_D/2)^2;
-    if ~brd(k) && abs(area/areaC - 1) < CIRC_TOL && sqrt(l2/max(l1, 1e-12)) > CIRC_ROUND
+    % 2026-11-26: area band widened (was +-40 %): the real Pi camera scale is not the Unreal K08, so the
+    % circle can look 0.5x - 2x its true area. A line piece is long or thin; the circle is round and alone.
+    if ~brd(k) && area/areaC > CIRC_AMIN && area/areaC < CIRC_AMAX && sqrt(l2/max(l1, 1e-12)) > CIRC_ROUND
         circNow = [mN mE]; circSeen = true;
     elseif len > LINE_LEN || (brd(k) && len > 0.22)
         isLine(k) = true;
@@ -151,6 +159,51 @@ for c = 1:W
     for r = 1:H
         k = lab(r,c);
         if k > 0 && k <= nL && isLine(k), lineM(r,c) = true; nLinePx = nLinePx + 1; end
+    end
+end
+% 2026-11-26: on the real track the line runs into the circle, so line + circle are ONE blob and the
+% test above never fires. Second test: distance of every red pixel to the nearest non-red pixel
+% (two-pass chamfer). Pixels deeper than CORE_D/2 exist only inside the circle; their mean is its centre.
+% OFF: the real track has a gap before the circle, and this test fires on sharp corners.
+if CORE_TEST && ~circSeen
+    dt = zeros(H, W);
+    for r = 1:H, for c = 1:W, if red(r,c), dt(r,c) = 1e4; end, end, end
+    for r = 1:H
+        for c = 1:W
+            if dt(r,c) > 0
+                v = dt(r,c);
+                if r > 1, v = min(v, dt(r-1,c) + 1); end
+                if c > 1, v = min(v, dt(r,c-1) + 1); end
+                if r > 1 && c > 1, v = min(v, dt(r-1,c-1) + 1.4142); end
+                if r > 1 && c < W, v = min(v, dt(r-1,c+1) + 1.4142); end
+                dt(r,c) = v;
+            end
+        end
+    end
+    for r = H:-1:1
+        for c = W:-1:1
+            if dt(r,c) > 0
+                v = dt(r,c);
+                if r < H, v = min(v, dt(r+1,c) + 1); end
+                if c < W, v = min(v, dt(r,c+1) + 1); end
+                if r < H && c < W, v = min(v, dt(r+1,c+1) + 1.4142); end
+                if r < H && c > 1, v = min(v, dt(r+1,c-1) + 1.4142); end
+                dt(r,c) = v;
+            end
+        end
+    end
+    rC = CORE_D / 2 / mpp;                 % px
+    nCore = 0; cN = 0; cE = 0; cut = false;
+    for c = 1:W
+        for r = 1:H
+            if dt(r,c) >= rC && dt(r,c) < 1e3
+                nCore = nCore + 1; cN = cN + gN(r,c); cE = cE + gE(r,c);
+                if r <= rC + 2 || r >= H + 1 - rC - 2 || c <= rC + 2 || c >= W + 1 - rC - 2, cut = true; end
+            end
+        end
+    end
+    if nCore >= 3 && ~cut
+        circNow = [cN cE] / nCore; circSeen = true;
     end
 end
 % circle confirmation (estimate moved to the current frame: it is a floor point)
@@ -229,6 +282,7 @@ if nc > 0, lastLineP = p; end
 
 %% ---------------- 6. state machine ----------------
 spN = sp(1); spE = sp(2); zC = -ALT; yC = sp(4);
+if circOK && st >= 1 && st <= 4, st = 5; circEst = circLast; cnt = 0; end   % circle confirmed: go land on it
 switch st
     case 0  % TAKEOFF
         % ramp the height target (a 2 m step winds up PX4's height integrator: +0.3 m overshoot)
@@ -282,11 +336,13 @@ switch st
                     dGo = max(dAhead - END_MARGIN, 0);
                     vOk = A_BRAKE * (-LAG_T + sqrt(LAG_T^2 + 2*dGo/A_BRAKE));
                     k2 = max(cos(min(abs(wrapA(heading - sp(4))), pi/2)), 0)^2;   % slow while the nose still turns
+                    if YAW_HOLD, k2 = 1; end
                     stp = max(STEP_MIN, min(V_MAX, vOk) * T_CARROT * k2);
                     spN = p(1) + stp*cos(heading) + lineOff*sin(heading);
                     spE = p(2) + stp*sin(heading) - lineOff*cos(heading);
                 else
                     k2 = max(cos(min(abs(wrapA(dirC - yaw)), pi/2)), 0)^2;
+                    if YAW_HOLD, k2 = 1; end
                     stp = STEP_MIN + (STEP_MAX - STEP_MIN)*k2;
                     spN = p(1) + stp*cos(dirC); spE = p(2) + stp*sin(dirC);
                 end
@@ -337,7 +393,7 @@ switch st
             nextDir = cand(bi,1);
         end
         if ~isnan(nextDir), yC = yawToward(sp(4), nextDir, YAW_STEP); else, yC = sp(4); end   % smooth pivot
-        aligned = isnan(nextDir) || abs(wrapA(yaw - nextDir)) < TURN_TOL;   % pivot first, then go
+        aligned = YAW_HOLD || isnan(nextDir) || abs(wrapA(yaw - nextDir)) < TURN_TOL;   % pivot first, then go
         if (norm(p - vertex) < VERTEX_TOL && aligned) || t - tState > CORNER_T
             if isnan(nextDir), st = 3; coast0 = p; else, heading = nextDir; st = 1; end
             tState = t;
@@ -391,6 +447,7 @@ if norm(dl) > mx, lead = leadPrev + dl * (mx / norm(dl)); end
 leadPrev = lead;
 spN = p(1) + lead(1); spE = p(2) + lead(2);
 % yaw: rate ramps up, cruises, and ramps down to stop exactly on the target heading
+if YAW_HOLD, yC = home(3); end
 eY = wrapA(yC - yOut);
 rDes = sign(eY) * min([YAW_RATE, sqrt(2*YAW_ACC*abs(eY)), abs(eY)/FRAME_DT]);
 yRate = yRate + max(-YAW_ACC*FRAME_DT, min(YAW_ACC*FRAME_DT, rDes - yRate));
